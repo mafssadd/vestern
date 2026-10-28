@@ -48,7 +48,6 @@
   --wrap:1180px;
   --gutter:clamp(16px,4vw,40px);
   --wm-opacity:.05;
-  --grain-wood:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2000' height='440'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0024 0.12' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .32 0 0 0 0 .17 0 0 0 .75 -.36'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --grain-paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .32 0 0 0 0 .2 0 0 0 0 .09 0 0 0 .95 -.36'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
   --distress:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='d'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.95'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23d)'/%3E%3C/svg%3E");
 }
@@ -59,12 +58,15 @@ body{
   margin:0;
   color:var(--cream);
   font:400 clamp(17px,.95rem + .2vw,19px)/1.62 var(--f-text);
-  background-color:var(--char);
-  background-image:
-    var(--grain-wood),
-    repeating-linear-gradient(180deg,transparent 0 85px,rgba(0,0,0,.62) 85px 87px,rgba(255,200,140,.05) 87px 88px),
-    repeating-linear-gradient(180deg,rgba(255,170,90,.03) 0 88px,rgba(0,0,0,.22) 88px 176px,rgba(255,170,90,0) 176px 264px,rgba(0,0,0,.32) 264px 352px,rgba(255,170,90,.05) 352px 440px);
+  background:var(--char);
   overflow-x:hidden;
+}
+body::before{
+  content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% -10%,rgba(233,166,75,.10),transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 105%,rgba(138,58,38,.10),transparent 70%),
+    radial-gradient(ellipse 120% 95% at 50% 45%,transparent 55%,rgba(0,0,0,.42) 100%);
 }
 img{max-width:100%;display:block}
 a{color:inherit}
@@ -246,7 +248,7 @@ p{margin:0 0 1em;text-wrap:pretty}
 
 /* ---------- rules ---------- */
 .rules__grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(28px,4vw,56px);align-items:start}
-.board{position:relative;padding:clamp(26px,4vw,52px);background-color:#35231a;background-image:var(--grain-wood),repeating-linear-gradient(180deg,rgba(255,200,140,.035) 0 64px,rgba(0,0,0,.35) 64px 66px),linear-gradient(160deg,#3d281b,#2b1b11);border-radius:4px;box-shadow:inset 0 0 0 10px #1d130c,inset 0 0 0 11px rgba(233,166,75,.3),inset 0 0 90px rgba(0,0,0,.55),0 24px 50px rgba(0,0,0,.45)}
+.board{position:relative;padding:clamp(26px,4vw,52px);background:linear-gradient(160deg,#3e2a1c 0,#30200f 55%,#271a0f 100%);border-radius:4px;box-shadow:inset 0 0 0 10px #1d130c,inset 0 0 0 11px rgba(233,166,75,.3),inset 0 0 90px rgba(0,0,0,.55),0 24px 50px rgba(0,0,0,.45)}
 .board__bolt{position:absolute;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f1d7a0,#8a5a22 55%,#2c1a0c)}
 .board__bolt:nth-of-type(1){top:20px;left:20px}.board__bolt:nth-of-type(2){top:20px;right:20px}.board__bolt:nth-of-type(3){bottom:20px;left:20px}.board__bolt:nth-of-type(4){bottom:20px;right:20px}
 .board h2{font-size:clamp(32px,4vw,52px);color:var(--cream);text-shadow:0 2px 0 rgba(0,0,0,.5)}
@@ -277,6 +279,7 @@ p{margin:0 0 1em;text-wrap:pretty}
 .meter__zero{font:800 72px/.8 var(--f-head);color:var(--brick)}
 .meter__result span:last-child{font:700 18px/1.2 var(--f-head)}
 .meter__note{margin:12px 0 0;font-style:italic;font-size:16px;color:var(--ink-2);min-height:3em}
+@media (max-width:600px){.board{padding:48px 22px 40px}}
 @media (max-width:900px){.rules__grid{grid-template-columns:minmax(0,1fr)}.meter{max-width:460px;margin:8px auto 0}}
 @media (max-width:480px){.rule{grid-template-columns:minmax(0,1fr);gap:10px}.rule__stamp{justify-self:start}}
 
@@ -368,7 +371,6 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
 .receipt__stamp{display:inline-block;margin-top:12px;font:800 13px/1 var(--f-head);text-transform:uppercase;letter-spacing:.14em;color:var(--brick);border:3px double currentColor;padding:7px 10px 5px;transform:rotate(-4deg);opacity:.8;-webkit-mask-image:var(--distress);mask-image:var(--distress);-webkit-mask-size:120px;mask-size:120px;pointer-events:none}
 .calc__grid > div:last-child{align-self:stretch}
 .counter{position:relative;height:62px;margin-top:-2px;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#4a2e1a 0,#2f1d10 15px,#1a100a 16px,#120b07 100%);box-shadow:inset 0 2px 0 rgba(255,200,140,.18)}
-.counter::before{content:"";position:absolute;left:0;right:0;top:16px;bottom:0;background:var(--grain-wood);opacity:.7}
 .counter::after{content:"";position:absolute;left:5%;right:5%;bottom:-3px;height:3px;border-radius:3px;background:var(--led);box-shadow:0 0 10px 2px var(--led),0 0 46px 10px rgba(71,168,255,.33)}
 .counter__label{position:absolute;left:0;right:0;bottom:12px;text-align:center;font:600 12px/1 var(--f-head);letter-spacing:.06em;color:rgba(243,230,203,.45)}
 .calc .owner-note--inline{max-width:420px}
@@ -1009,7 +1011,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
   var WA_NUM = '79163809757';
   var waLink = function(text){ return 'https://wa.me/' + WA_NUM + '?text=' + encodeURIComponent(text); };
   var fmt = function(n){ return Math.round(n).toLocaleString('ru-RU'); };
-  var rub = function(n){ return fmt(n) + ' ₽'; };
+  var rub = function(n){ return fmt(n) + '\u00a0₽'; };
   var pad = function(n){ return (n < 10 ? '0' : '') + n; };
   var plural = function(n, one, few, many){
     var m10 = n % 10, m100 = n % 100;
@@ -1058,7 +1060,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
     $$('[data-wa]').forEach(function(a){ a.href = waLink(TEXT[a.getAttribute('data-wa')] || TEXT.book); });
   });
   safe('watermark', function(){
-    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="520" height="320"><text x="260" y="170" text-anchor="middle" transform="rotate(-24 260 160)" font-family="Georgia,serif" font-size="21" letter-spacing="2" fill="#c28536">ДЕМО-ВЕРСИЯ — ДЕНИС СТРЕПЕНЮК</text></svg>';
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="680" height="430"><text x="340" y="222" text-anchor="middle" transform="rotate(-24 340 215)" font-family="Georgia,serif" font-size="21" letter-spacing="2" fill="#c28536">ДЕМО-ВЕРСИЯ — ДЕНИС СТРЕПЕНЮК</text></svg>';
     $('#wm').style.backgroundImage = 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")';
   });
   safe('header', function(){
@@ -1259,7 +1261,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
     var MONTH = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
     var MONTH_SHORT = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
     var RATE_COLOR = { 3000: '#e6d0a0', 3500: '#d6a75e', 4000: '#bb7a32', 5500: '#93431f', 6000: '#64190f' };
-    /* Тарифы лофта (westernloft.ru): пн 08:00–23:59 — 3000; вт–чт — 3500; пт — 5500;
+    /* Тарифы лофта (westernloft.ru): пн 08:00-23:59 — 3000; вт-чт — 3500; пт — 5500;
        сб 00:00 — вс 08:00 — 6000; вс 08:00 — пн 08:00 — 4000. До 45 гостей. */
     function rateAt(dow, h){
       if (dow === 0) return h < 8 ? 4000 : 3000;
@@ -1325,7 +1327,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
 
     var exEl = $('#extras');
     EXTRAS.forEach(function(x){
-      var price = x.hourly ? 'от ' + fmt(x.hourly) + ' ₽/ч' : fmt(x.price) + ' ₽';
+      var price = x.hourly ? 'от ' + fmt(x.hourly) + '\u00a0₽/ч' : fmt(x.price) + '\u00a0₽';
       exEl.insertAdjacentHTML('beforeend', '<label class="chip"><input type="checkbox" value="' + x.k + '"><span>' + (x.label || x.name) + ' <small>' + price + '</small></span></label>');
     });
     exEl.addEventListener('change', function(e){ state.extras[e.target.value] = e.target.checked; render(); });
@@ -1367,7 +1369,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
       [5500, 'пятница'],
       [6000, 'суббота и ночь на воскресенье']
     ];
-    $('#weekLegend').innerHTML = LEGEND.map(function(l){ return '<li><i style="--c:' + RATE_COLOR[l[0]] + '"></i><span><b>' + fmt(l[0]) + ' ₽/ч</b> — ' + l[1] + '</span></li>'; }).join('');
+    $('#weekLegend').innerHTML = LEGEND.map(function(l){ return '<li><i style="--c:' + RATE_COLOR[l[0]] + '"></i><span><b>' + fmt(l[0]) + '\u00a0₽/ч</b> — ' + l[1] + '</span></li>'; }).join('');
 
     function compute(){
       var segs = [];
@@ -1380,7 +1382,7 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
       }
       var rent = segs.reduce(function(s, x){ return s + x.rate * x.hours; }, 0);
       var extras = EXTRAS.filter(function(x){ return state.extras[x.k]; }).map(function(x){
-        return { name: x.name, sum: x.hourly ? x.hourly * state.dur : x.price, from: !!x.hourly, note: x.hourly ? state.dur + ' ч × от ' + rub(x.hourly) : 'на всё мероприятие' };
+        return { name: x.name, sum: x.hourly ? x.hourly * state.dur : x.price, from: !!x.hourly, note: x.hourly ? state.dur + '\u00a0ч × от ' + rub(x.hourly) : 'на всё мероприятие' };
       });
       var total = rent + extras.reduce(function(s, x){ return s + x.sum; }, 0);
       var endH = state.start + state.dur;
@@ -1419,13 +1421,13 @@ input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--amb
       $('#guestsOut').textContent = state.guests + ' ' + plural(state.guests, 'гость', 'гостя', 'гостей');
 
       var html = c.segs.map(function(s){
-        return '<li><span>' + dayLabel(dateAt(s.off)) + '<small>' + pad(s.from) + ':00–' + pad(s.to) + ':00, ' + s.hours + ' ч × ' + rub(s.rate) + '</small></span><b>' + rub(s.rate * s.hours) + '</b></li>';
+        return '<li><span>' + dayLabel(dateAt(s.off)) + '<small>' + pad(s.from) + ':00\u2013' + pad(s.to) + ':00, ' + s.hours + '\u00a0ч × ' + rub(s.rate) + '</small></span><b>' + rub(s.rate * s.hours) + '</b></li>';
       }).join('');
       html += c.extras.map(function(x){
         return '<li><span>' + x.name + '<small>' + x.note + '</small></span><b>' + (x.from ? 'от ' : '') + rub(x.sum) + '</b></li>';
       }).join('');
       $('#rcLines').innerHTML = html;
-      $('#rcTotal').textContent = (c.from ? 'от ' : '≈ ') + rub(c.total);
+      $('#rcTotal').textContent = (c.from ? 'от ' : '≈\u00a0') + rub(c.total);
       var per = Math.round(c.total / state.guests / 10) * 10;
       $('#rcPer').textContent = (c.from ? 'от ' : 'около ') + rub(per) + ' с гостя';
       var note = 'Не входят: уборка, административный сбор и страховой депозит.';
